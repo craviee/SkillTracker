@@ -31,4 +31,16 @@
       <None Include="Properties\launchSettings.json" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Content Include=".idea\.idea.SkillTracker\.idea\.name" />
+      <Content Include=".idea\.idea.SkillTracker\.idea\indexLayout.xml" />
+      <Content Include=".idea\.idea.SkillTracker\.idea\projectSettingsUpdater.xml" />
+      <Content Include=".idea\.idea.SkillTracker\.idea\vcs.xml" />
+      <Content Include=".idea\.idea.SkillTracker\.idea\workspace.xml" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include=".idea\.idea.SkillTracker\.idea\dataSources" />
+    </ItemGroup>
+
 </Project>
