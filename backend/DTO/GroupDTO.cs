@@ -1,9 +1,8 @@
-﻿namespace SkillTracker.Models;
+﻿namespace SkillTracker.DTO;
 
-public class Skill
+public class GroupDTO
 {
     public decimal Id { get; set; }
-    public decimal GroupId { get; set; }
     public string Name { get; set; }
     public decimal CreatedBy { get; set; }
     public DateTime CreatedAt { get; set; }

@@ -1,6 +1,6 @@
-﻿namespace SkillTracker.Models;
+﻿namespace SkillTracker.DTO;
 
-public class UserSkill
+public class UserSkillDTO
 {
     public decimal Id { get; set; }
     public decimal UserId { get; set; }
