@@ -11,9 +11,9 @@ public partial class Group
 
     public int CreatedBy { get; set; }
 
-    public DateTime? CreatedAt { get; set; }
+    public DateTime CreatedAt { get; set; }
 
-    public int UpdatedBy { get; set; }
+    public int? UpdatedBy { get; set; }
 
     public DateTime? UpdatedAt { get; set; }
 
@@ -21,5 +21,5 @@ public partial class Group
 
     public virtual ICollection<Skill> Skills { get; set; } = new List<Skill>();
 
-    public virtual User UpdatedByNavigation { get; set; } = null!;
+    public virtual User? UpdatedByNavigation { get; set; }
 }

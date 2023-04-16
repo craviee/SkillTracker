@@ -12,58 +12,58 @@ namespace SkillTracker.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UserController : ControllerBase
+    public class GroupController : ControllerBase
     {
         private readonly SkilltrackerContext _context;
 
-        public UserController(SkilltrackerContext context)
+        public GroupController(SkilltrackerContext context)
         {
             _context = context;
         }
 
-        // GET: api/User
+        // GET: api/Group
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<UserDTO>>> GetUsers()
+        public async Task<ActionResult<IEnumerable<GroupDTO>>> GetGroups()
         {
-            if (_context.Users == null)
+            if (_context.Groups == null)
             {
                 return NotFound();
             }
 
-            List<User> users = await _context.Users.ToListAsync();
-            return UserDTO.FromEntityList(users);
+            List<Group> groups = await _context.Groups.ToListAsync();
+            return GroupDTO.FromEntityList(groups);
         }
 
-        // GET: api/User/5
+        // GET: api/Group/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<UserDTO>> GetUser(int id)
+        public async Task<ActionResult<GroupDTO>> GetGroup(int id)
         {
-            if (_context.Users == null)
+            if (_context.Groups == null)
             {
                 return NotFound();
             }
 
-            var user = await _context.Users.FindAsync(id);
+            var group = await _context.Groups.FindAsync(id);
 
-            if (user == null)
+            if (group == null)
             {
                 return NotFound();
             }
 
-            return new UserDTO(user);
+            return new GroupDTO(group);
         }
 
-        // PUT: api/User/5
+        // PUT: api/Group/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutUser(int id, UserDTO userDTO)
+        public async Task<IActionResult> PutGroup(int id, GroupDTO groupDTO)
         {
-            if (id != userDTO.Id)
+            if (id != groupDTO.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(userDTO.ToEntity()).State = EntityState.Modified;
+            _context.Entry(groupDTO.ToEntity()).State = EntityState.Modified;
 
             try
             {
@@ -71,7 +71,7 @@ namespace SkillTracker.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!UserExists(id))
+                if (!GroupExists(id))
                 {
                     return NotFound();
                 }
@@ -84,47 +84,47 @@ namespace SkillTracker.Controllers
             return NoContent();
         }
 
-        // POST: api/User
+        // POST: api/Group
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<UserDTO>> PostUser(UserDTO userDTO)
+        public async Task<ActionResult<GroupDTO>> PostGroup(GroupDTO groupDTO)
         {
-            if (_context.Users == null)
+            if (_context.Groups == null)
             {
-                return Problem("Entity set 'SkilltrackerContext.Users'  is null.");
+                return Problem("Entity set 'SkilltrackerContext.Groups'  is null.");
             }
 
-            User userEntity = userDTO.ToEntity();
-            _context.Users.Add(userEntity);
+            Group groupEntity = groupDTO.ToEntity();
+            _context.Groups.Add(groupEntity);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetUser", new { id = userDTO.Id }, new UserDTO(userEntity));
+            return CreatedAtAction("GetGroup", new { id = groupDTO.Id }, new GroupDTO(groupEntity));
         }
 
-        // DELETE: api/User/5
+        // DELETE: api/Group/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUser(int id)
+        public async Task<IActionResult> DeleteGroup(int id)
         {
-            if (_context.Users == null)
+            if (_context.Groups == null)
             {
                 return NotFound();
             }
 
-            var user = await _context.Users.FindAsync(id);
-            if (user == null)
+            var @group = await _context.Groups.FindAsync(id);
+            if (@group == null)
             {
                 return NotFound();
             }
 
-            _context.Users.Remove(user);
+            _context.Groups.Remove(@group);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool UserExists(int id)
+        private bool GroupExists(int id)
         {
-            return (_context.Users?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Groups?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

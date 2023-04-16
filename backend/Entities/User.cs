@@ -17,7 +17,7 @@ public partial class User
 
     public DateTime? UpdatedAt { get; set; }
 
-    public bool? IsEnabled { get; set; }
+    public bool IsEnabled { get; set; }
 
     public virtual ICollection<Group> GroupCreatedByNavigations { get; set; } = new List<Group>();
 

@@ -1,13 +1,26 @@
+create table __efmigrationshistory
+(
+    MigrationId varchar
+(
+    150
+) not null
+    primary key,
+    ProductVersion varchar
+(
+    32
+) not null
+    );
+
 create table users
 (
     Id         int auto_increment
         primary key,
-    Created_At datetime   default CURRENT_TIMESTAMP not null,
-    Email      varchar(255)                         not null,
-    Name       varchar(255)                         not null,
-    Role       int        default 1                 not null,
-    Updated_At datetime                             null,
-    Is_Enabled tinyint(1) default 1                 not null,
+    Created_At datetime default CURRENT_TIMESTAMP not null,
+    Email      varchar(255)                       not null,
+    Name       varchar(255)                       not null,
+    Role       int      default 1                 not null,
+    Updated_At datetime null,
+    Is_Enabled tinyint(1) not null,
     constraint Users_email_unique
         unique (Email)
 );
@@ -18,9 +31,9 @@ create table `groups`
         primary key,
     Name       varchar(255)                       not null,
     Created_By int                                not null,
-    Created_At datetime default CURRENT_TIMESTAMP null,
-    Updated_By int                                not null,
-    Updated_At datetime                           null,
+    Created_At datetime default CURRENT_TIMESTAMP not null,
+    Updated_By int null,
+    Updated_At datetime null,
     constraint groups_users_created_fk
         foreign key (Created_By) references users (Id),
     constraint groups_users_updated_fk
@@ -35,8 +48,8 @@ create table skills
     Name       varchar(255)                       not null,
     Created_By int                                not null,
     Created_At datetime default CURRENT_TIMESTAMP not null,
-    Updated_By int                                null,
-    Updated_At datetime                           null,
+    Updated_By int null,
+    Updated_At datetime null,
     constraint Skills_groups_Id_fk
         foreign key (Group_Id) references `groups` (Id),
     constraint Skills_users_created_fk
@@ -64,15 +77,14 @@ create trigger TR_UPDATE_DATE_USER_DELETE
     on userskills
     for each row
 BEGIN
-        Update skilltracker.users Set Updated_At = CURRENT_TIMESTAMP Where Id = OLD.User_Id;
-    END;
+    Update skilltracker.users Set Updated_At = CURRENT_TIMESTAMP Where Id = OLD.User_Id;
+END;
 
 create trigger TR_UPDATE_DATE_USER_INSERT
     after insert
     on userskills
     for each row
 BEGIN
-        Update skilltracker.users Set Updated_At = NEW.Created_At Where Id = NEW.User_Id;
-    END;
-
+    Update skilltracker.users Set Updated_At = NEW.Created_At Where Id = NEW.User_Id;
+END;
 

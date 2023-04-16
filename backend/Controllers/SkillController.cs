@@ -12,58 +12,58 @@ namespace SkillTracker.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UserController : ControllerBase
+    public class SkillController : ControllerBase
     {
         private readonly SkilltrackerContext _context;
 
-        public UserController(SkilltrackerContext context)
+        public SkillController(SkilltrackerContext context)
         {
             _context = context;
         }
 
-        // GET: api/User
+        // GET: api/Skill
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<UserDTO>>> GetUsers()
+        public async Task<ActionResult<IEnumerable<SkillDTO>>> GetSkills()
         {
-            if (_context.Users == null)
+            if (_context.Skills == null)
             {
                 return NotFound();
             }
 
-            List<User> users = await _context.Users.ToListAsync();
-            return UserDTO.FromEntityList(users);
+            List<Skill> skills = await _context.Skills.ToListAsync();
+            return SkillDTO.FromEntityList(skills);
         }
 
-        // GET: api/User/5
+        // GET: api/Skill/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<UserDTO>> GetUser(int id)
+        public async Task<ActionResult<SkillDTO>> GetSkill(int id)
         {
-            if (_context.Users == null)
+            if (_context.Skills == null)
             {
                 return NotFound();
             }
 
-            var user = await _context.Users.FindAsync(id);
+            var skill = await _context.Skills.FindAsync(id);
 
-            if (user == null)
+            if (skill == null)
             {
                 return NotFound();
             }
 
-            return new UserDTO(user);
+            return new SkillDTO(skill);
         }
 
-        // PUT: api/User/5
+        // PUT: api/Skill/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutUser(int id, UserDTO userDTO)
+        public async Task<IActionResult> PutSkill(int id, SkillDTO skillDTO)
         {
-            if (id != userDTO.Id)
+            if (id != skillDTO.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(userDTO.ToEntity()).State = EntityState.Modified;
+            _context.Entry(skillDTO.ToEntity()).State = EntityState.Modified;
 
             try
             {
@@ -71,7 +71,7 @@ namespace SkillTracker.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!UserExists(id))
+                if (!SkillExists(id))
                 {
                     return NotFound();
                 }
@@ -84,47 +84,47 @@ namespace SkillTracker.Controllers
             return NoContent();
         }
 
-        // POST: api/User
+        // POST: api/Skill
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<UserDTO>> PostUser(UserDTO userDTO)
+        public async Task<ActionResult<SkillDTO>> PostSkill(SkillDTO skillDTO)
         {
-            if (_context.Users == null)
+            if (_context.Skills == null)
             {
-                return Problem("Entity set 'SkilltrackerContext.Users'  is null.");
+                return Problem("Entity set 'SkilltrackerContext.Skills'  is null.");
             }
 
-            User userEntity = userDTO.ToEntity();
-            _context.Users.Add(userEntity);
+            Skill skillEntity = skillDTO.ToEntity();
+            _context.Skills.Add(skillEntity);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetUser", new { id = userDTO.Id }, new UserDTO(userEntity));
+            return CreatedAtAction("GetSkill", new { id = skillDTO.Id }, new SkillDTO(skillEntity));
         }
 
-        // DELETE: api/User/5
+        // DELETE: api/Skill/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUser(int id)
+        public async Task<IActionResult> DeleteSkill(int id)
         {
-            if (_context.Users == null)
+            if (_context.Skills == null)
             {
                 return NotFound();
             }
 
-            var user = await _context.Users.FindAsync(id);
-            if (user == null)
+            var skill = await _context.Skills.FindAsync(id);
+            if (skill == null)
             {
                 return NotFound();
             }
 
-            _context.Users.Remove(user);
+            _context.Skills.Remove(skill);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool UserExists(int id)
+        private bool SkillExists(int id)
         {
-            return (_context.Users?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Skills?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }
